@@ -28,6 +28,10 @@ object Libs {
             const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
             const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
         }
+
+        object KotlinX {
+            const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime:0.3.2"
+        }
     }
 
     object AndroidX {
@@ -317,6 +321,7 @@ object Libs {
             }
 
             object Extensions {
+                const val clientResources = "io.ktor:ktor-client-resources:$version"
                 const val contentNegotiation = "io.ktor:ktor-client-content-negotiation:$version"
                 const val encoding = "io.ktor:ktor-client-encoding:$version"
                 const val authentication = "io.ktor:ktor-client-auth:$version"

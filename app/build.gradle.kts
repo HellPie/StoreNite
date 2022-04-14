@@ -103,8 +103,10 @@ android {
 
 dependencies {
     // Kotlin
+    implementation(Libs.Kotlin.stdLib)
     implementation(Libs.Kotlin.Coroutines.android)
     implementation(Libs.Kotlin.Serialization.json)
+    implementation(Libs.Kotlin.KotlinX.dateTime)
 
     // AndroidX
     kapt(Libs.AndroidX.Lifecycle.compiler)
@@ -129,6 +131,21 @@ dependencies {
     implementation(Libs.Dagger.AndroidX.navigation)
     implementation(Libs.Dagger.AndroidX.workManager)
 
+    // Ktor
+    implementation(Libs.Network.Ktor.core)
+    implementation(Libs.Network.Ktor.okHttp)
+    implementation(Libs.Network.Ktor.Serialization.json)
+    implementation(Libs.Network.Ktor.Extensions.clientResources)
+    implementation(Libs.Network.Ktor.Extensions.contentNegotiation)
+    implementation(Libs.Network.Ktor.Extensions.logging)
+    testImplementation(Libs.Network.Ktor.test)
+
+    // Coil
+    implementation(Libs.Network.Coil.core)
+    implementation(Libs.Network.Coil.compose)
+    implementation(Libs.Network.Coil.video)
+
     // Instrumentation
+    implementation(Libs.Utils.timber)
     debugImplementation(Libs.Utils.leakCanary)
 }
