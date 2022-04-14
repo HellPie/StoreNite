@@ -102,10 +102,6 @@ android {
 }
 
 dependencies {
-    // Modules
-    implementation(project(":modules:base"))
-    implementation(project(":modules:i18n"))
-
     // Kotlin
     implementation(Libs.Kotlin.Coroutines.android)
     implementation(Libs.Kotlin.Serialization.json)
