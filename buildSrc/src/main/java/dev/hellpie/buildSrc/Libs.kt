@@ -204,7 +204,7 @@ object Libs {
         }
 
         object Utils {
-            const val annotation = "androidx.annotation:annotation:1.4.0-alpha02"
+            const val annotation = "androidx.annotation:annotation-ktx:1.4.0-alpha02"
             const val collection = "androidx.collection:collection-ktx:1.2.0"
             const val documentFile = "androidx.documentfile:documentfile:1.1.0-alpha01"
             const val savedState = "androidx.savedstate:savedstate-ktx:1.2.0-alpha02"
@@ -257,7 +257,6 @@ object Libs {
 
         object Accompanist {
             private const val version = "0.24.6-alpha"
-            const val insets = "com.google.accompanist:accompanist-insets:$version"
             const val insetsUi = "com.google.accompanist:accompanist-insets-ui:$version"
             const val systemUiController = "com.google.accompanist:accompanist-systemuicontroller:$version"
             const val appCompatTheme = "com.google.accompanist:accompanist-appcompat-theme:$version"

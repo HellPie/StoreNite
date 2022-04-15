@@ -148,4 +148,7 @@ dependencies {
     // Instrumentation
     implementation(Libs.Utils.timber)
     debugImplementation(Libs.Utils.leakCanary)
+
+    // Utils
+    implementation(Libs.AndroidX.Utils.annotation)
 }
