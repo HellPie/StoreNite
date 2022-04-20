@@ -115,6 +115,37 @@ dependencies {
     implementation(Libs.AndroidX.Layouts.activity)
     implementation(Libs.AndroidX.Layouts.material3)
 
+    // Compose
+    kapt(Libs.Compose.compiler)
+    implementation(Libs.Compose.runtime)
+    implementation(Libs.Compose.liveData)
+    implementation(Libs.Compose.ui)
+    implementation(Libs.Compose.foundation)
+    implementation(Libs.Compose.animation)
+    implementation(Libs.Compose.material3)
+    implementation(Libs.Compose.preview)
+    debugImplementation(Libs.Compose.tooling)
+
+    implementation(Libs.Compose.Accompanist.insetsUi)
+    implementation(Libs.Compose.Accompanist.systemUiController)
+    implementation(Libs.Compose.Accompanist.appCompatTheme)
+    implementation(Libs.Compose.Accompanist.pager)
+    implementation(Libs.Compose.Accompanist.pagerIndicators)
+    implementation(Libs.Compose.Accompanist.swipeRefresh)
+    implementation(Libs.Compose.Accompanist.placeholder)
+    implementation(Libs.Compose.Accompanist.placeholderMaterial)
+    implementation(Libs.Compose.Accompanist.drawablePainter)
+    implementation(Libs.Compose.Accompanist.flowLayout)
+    implementation(Libs.Compose.Accompanist.permissions)
+    implementation(Libs.Compose.Accompanist.navigationAnimation)
+    implementation(Libs.Compose.Accompanist.navigationMaterial)
+    implementation(Libs.Compose.Accompanist.webView)
+
+    implementation(Libs.Compose.ThirdParty.reorderable)
+
+    // Data
+    implementation(Libs.AndroidX.DataStore.Preferences.core)
+
     // Dagger
     kapt(Libs.Dagger.compiler)
     kapt(Libs.Dagger.androidCompiler)
@@ -129,7 +160,7 @@ dependencies {
     implementation(Libs.Dagger.AndroidX.compose)
     implementation(Libs.Dagger.AndroidX.fragment)
     implementation(Libs.Dagger.AndroidX.navigation)
-    implementation(Libs.Dagger.AndroidX.workManager)
+    //implementation(Libs.Dagger.AndroidX.workManager)
 
     // Ktor
     implementation(Libs.Network.Ktor.core)

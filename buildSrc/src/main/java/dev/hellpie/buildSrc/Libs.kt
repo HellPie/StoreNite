@@ -204,7 +204,7 @@ object Libs {
         }
 
         object Utils {
-            const val annotation = "androidx.annotation:annotation-ktx:1.4.0-alpha02"
+            const val annotation = "androidx.annotation:annotation:1.4.0-alpha02"
             const val collection = "androidx.collection:collection-ktx:1.2.0"
             const val documentFile = "androidx.documentfile:documentfile:1.1.0-alpha01"
             const val savedState = "androidx.savedstate:savedstate-ktx:1.2.0-alpha02"
@@ -248,6 +248,8 @@ object Libs {
         const val animation = "androidx.compose.animation:animation:$version"
         const val material2 = "androidx.compose.material:material:$version"
         const val material3 = "androidx.compose.material3:material3:1.0.0-alpha09"
+        const val preview = "androidx.compose.ui:ui-tooling-preview:$version"
+        const val tooling = "androidx.compose.ui:ui-tooling:$version"
 
         object Glance {
             private const val version = "1.0.0-alpha03"
