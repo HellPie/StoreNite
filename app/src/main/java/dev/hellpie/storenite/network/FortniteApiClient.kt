@@ -1,5 +1,6 @@
 package dev.hellpie.storenite.network
 
+import android.util.Log
 import dev.hellpie.storenite.models.Cosmetics
 import dev.hellpie.storenite.models.CosmeticsDiff
 import dev.hellpie.storenite.models.CosmeticsStoreSet
@@ -76,7 +77,7 @@ interface FortniteApiService {
             return FortniteApiServiceImpl(
                 HttpClient(OkHttp) {
                     install(Logging) {
-                        level = LogLevel.ALL
+                        level = LogLevel.INFO
                         logger = object : Logger {
                             override fun log(message: String) {
                                 Timber.d(message)
@@ -101,7 +102,7 @@ interface FortniteApiService {
                     install(Resources)
 
                     defaultRequest {
-                        url("https://fortnite-api.com/v2")
+                        url("https://fortnite-api.com/v2/")
                     }
 
                     expectSuccess = true
@@ -124,115 +125,172 @@ interface FortniteApiService {
 
 private class FortniteApiServiceImpl(private val client: HttpClient) : FortniteApiService {
     override suspend fun getAllCosmetics(language: String?): List<Cosmetics> =
-        client.getOrDefault(FortniteApiRoutes.Cosmetics(language), emptyList())
+        try {
+            val response: CosmeticsListResponse = client.get(FortniteApiRoutes.Cosmetics(language)).body()
+            response.data ?: emptyList()
+        } catch (exception: FortniteApiException) {
+            Timber.w(exception, "Fortnite API failure.")
+            emptyList()
+        } catch (exception: Exception) {
+            Timber.w(exception)
+            emptyList()
+        }
 
     override suspend fun getNewCosmetics(language: String?): CosmeticsDiff? =
-        client.getOrDefault(FortniteApiRoutes.Cosmetics.New(language), null)
+        try {
+            val response: CosmeticsDiffResponse = client.get(FortniteApiRoutes.Cosmetics.New(language)).body()
+            response.data
+        } catch (exception: FortniteApiException) {
+            Timber.w(exception, "Fortnite API failure.")
+            null
+        } catch (exception: Exception) {
+            Timber.w(exception)
+            null
+        }
 
     override suspend fun getCosmeticById(id: String, language: String?): Cosmetics? =
-        client.getOrDefault(FortniteApiRoutes.Cosmetics.ById(id, language), null)
+        try {
+            val response: CosmeticsResponse = client.get(FortniteApiRoutes.Cosmetics.ById(id, language)).body()
+            response.data
+        } catch (exception: FortniteApiException) {
+            Timber.w(exception, "Fortnite API failure.")
+            null
+        } catch (exception: Exception) {
+            Timber.w(exception)
+            null
+        }
 
     override suspend fun getCosmeticsByIds(ids: List<String>, language: String?): List<Cosmetics> =
-        client.getOrDefault(FortniteApiRoutes.Cosmetics.Search.ByIds(ids, language), emptyList())
+        try {
+            val response: CosmeticsListResponse = client.get(FortniteApiRoutes.Cosmetics.Search.ByIds(ids, language)).body()
+            response.data ?: emptyList()
+        } catch (exception: FortniteApiException) {
+            Timber.w(exception, "Fortnite API failure.")
+            emptyList()
+        } catch (exception: Exception) {
+            Timber.w(exception)
+            emptyList()
+        }
 
     override suspend fun getCosmeticBy(query: FortniteApiService.CosmeticsSearchQueries): Cosmetics? {
-        return client.getOrDefault(FortniteApiRoutes.Cosmetics.Search(
-            language = query.language,
-            searchLanguage = query.searchLanguage,
-            matchMethod = query.matchMethod,
-            id = query.id,
-            name = query.name,
-            description = query.description,
-            type = query.type,
-            displayType = query.displayType,
-            backendType = query.backendType,
-            rarity = query.rarity,
-            displayRarity = query.displayRarity,
-            backendRarity = query.backendRarity,
-            hasSeries = query.hasSeries,
-            series = query.series,
-            backendSeries = query.backendSeries,
-            hasSet = query.hasSet,
-            set = query.set,
-            setText = query.setText,
-            backendSet = query.backendSet,
-            hasIntroduction = query.hasIntroduction,
-            backendIntroduction = query.backendIntroduction,
-            introductionChapter = query.introductionChapter,
-            introductionSeason = query.introductionSeason,
-            hasFeaturedImage = query.hasFeaturedImage,
-            hasVariants = query.hasVariants,
-            hasGameplayTags = query.hasGameplayTags,
-            gameplayTag = query.gameplayTag,
-            hasMetaTags = query.hasMetaTags,
-            metaTag = query.metaTag,
-            hasDynamicPakId = query.hasDynamicPakId,
-            dynamicPakId = query.dynamicPakId,
-            added = query.added,
-            addedSince = query.addedSince,
-            unseenFor = query.unseenFor,
-            lastAppearance = query.lastAppearance,
-        ), null)
+        return try {
+            val response: CosmeticsResponse = client.get(FortniteApiRoutes.Cosmetics.Search(
+                language = query.language,
+                searchLanguage = query.searchLanguage,
+                matchMethod = query.matchMethod,
+                id = query.id,
+                name = query.name,
+                description = query.description,
+                type = query.type,
+                displayType = query.displayType,
+                backendType = query.backendType,
+                rarity = query.rarity,
+                displayRarity = query.displayRarity,
+                backendRarity = query.backendRarity,
+                hasSeries = query.hasSeries,
+                series = query.series,
+                backendSeries = query.backendSeries,
+                hasSet = query.hasSet,
+                set = query.set,
+                setText = query.setText,
+                backendSet = query.backendSet,
+                hasIntroduction = query.hasIntroduction,
+                backendIntroduction = query.backendIntroduction,
+                introductionChapter = query.introductionChapter,
+                introductionSeason = query.introductionSeason,
+                hasFeaturedImage = query.hasFeaturedImage,
+                hasVariants = query.hasVariants,
+                hasGameplayTags = query.hasGameplayTags,
+                gameplayTag = query.gameplayTag,
+                hasMetaTags = query.hasMetaTags,
+                metaTag = query.metaTag,
+                hasDynamicPakId = query.hasDynamicPakId,
+                dynamicPakId = query.dynamicPakId,
+                added = query.added,
+                addedSince = query.addedSince,
+                unseenFor = query.unseenFor,
+                lastAppearance = query.lastAppearance,
+            )).body()
+            response.data
+        } catch (exception: FortniteApiException) {
+            Timber.w(exception, "Fortnite API failure.")
+            null
+        } catch (exception: Exception) {
+            Timber.w(exception)
+            null
+        }
     }
 
     override suspend fun getCosmeticsBy(query: FortniteApiService.CosmeticsSearchQueries): List<Cosmetics> {
-        return client.getOrDefault(FortniteApiRoutes.Cosmetics.Search.All(FortniteApiRoutes.Cosmetics.Search(
-            language = query.language,
-            searchLanguage = query.searchLanguage,
-            matchMethod = query.matchMethod,
-            id = query.id,
-            name = query.name,
-            description = query.description,
-            type = query.type,
-            displayType = query.displayType,
-            backendType = query.backendType,
-            rarity = query.rarity,
-            displayRarity = query.displayRarity,
-            backendRarity = query.backendRarity,
-            hasSeries = query.hasSeries,
-            series = query.series,
-            backendSeries = query.backendSeries,
-            hasSet = query.hasSet,
-            set = query.set,
-            setText = query.setText,
-            backendSet = query.backendSet,
-            hasIntroduction = query.hasIntroduction,
-            backendIntroduction = query.backendIntroduction,
-            introductionChapter = query.introductionChapter,
-            introductionSeason = query.introductionSeason,
-            hasFeaturedImage = query.hasFeaturedImage,
-            hasVariants = query.hasVariants,
-            hasGameplayTags = query.hasGameplayTags,
-            gameplayTag = query.gameplayTag,
-            hasMetaTags = query.hasMetaTags,
-            metaTag = query.metaTag,
-            hasDynamicPakId = query.hasDynamicPakId,
-            dynamicPakId = query.dynamicPakId,
-            added = query.added,
-            addedSince = query.addedSince,
-            unseenFor = query.unseenFor,
-            lastAppearance = query.lastAppearance,
-        )), emptyList())
-    }
-
-    override suspend fun getShop(language: String?): CosmeticsStoreSet? {
-        return client.getOrDefault(FortniteApiRoutes.Shop(language), null)
-    }
-
-    override suspend fun getCombinedShop(language: String?): CosmeticsStoreSet? {
-        return client.getOrDefault(FortniteApiRoutes.Shop.Combined(language), null)
-    }
-
-    private suspend inline fun <reified T> HttpClient.getOrDefault(endpoint: Any, default: T): T {
         return try {
-            val response: FortniteApiResponse<T> = get(endpoint).body()
-            response.data ?: default
+            val response: CosmeticsListResponse = client.get(FortniteApiRoutes.Cosmetics.Search.All(FortniteApiRoutes.Cosmetics.Search(
+                language = query.language,
+                searchLanguage = query.searchLanguage,
+                matchMethod = query.matchMethod,
+                id = query.id,
+                name = query.name,
+                description = query.description,
+                type = query.type,
+                displayType = query.displayType,
+                backendType = query.backendType,
+                rarity = query.rarity,
+                displayRarity = query.displayRarity,
+                backendRarity = query.backendRarity,
+                hasSeries = query.hasSeries,
+                series = query.series,
+                backendSeries = query.backendSeries,
+                hasSet = query.hasSet,
+                set = query.set,
+                setText = query.setText,
+                backendSet = query.backendSet,
+                hasIntroduction = query.hasIntroduction,
+                backendIntroduction = query.backendIntroduction,
+                introductionChapter = query.introductionChapter,
+                introductionSeason = query.introductionSeason,
+                hasFeaturedImage = query.hasFeaturedImage,
+                hasVariants = query.hasVariants,
+                hasGameplayTags = query.hasGameplayTags,
+                gameplayTag = query.gameplayTag,
+                hasMetaTags = query.hasMetaTags,
+                metaTag = query.metaTag,
+                hasDynamicPakId = query.hasDynamicPakId,
+                dynamicPakId = query.dynamicPakId,
+                added = query.added,
+                addedSince = query.addedSince,
+                unseenFor = query.unseenFor,
+                lastAppearance = query.lastAppearance,
+            ))).body()
+            response.data ?: emptyList()
         } catch (exception: FortniteApiException) {
             Timber.w(exception, "Fortnite API failure.")
-            default
+            emptyList()
         } catch (exception: Exception) {
             Timber.w(exception)
-            default
+            emptyList()
         }
     }
+
+    override suspend fun getShop(language: String?): CosmeticsStoreSet? =
+        try {
+            val response: ShopResponse = client.get(FortniteApiRoutes.Shop(language)).body()
+            response.data
+        } catch (exception: FortniteApiException) {
+            Timber.w(exception, "Fortnite API failure.")
+            null
+        } catch (exception: Exception) {
+            Timber.w(exception)
+            null
+        }
+
+    override suspend fun getCombinedShop(language: String?): CosmeticsStoreSet? =
+        try {
+            val response: ShopResponse = client.get(FortniteApiRoutes.Shop.Combined(language)).body()
+            response.data
+        } catch (exception: FortniteApiException) {
+            Timber.w(exception, "Fortnite API failure.")
+            null
+        } catch (exception: Exception) {
+            Timber.w(exception)
+            null
+        }
 }

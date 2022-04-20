@@ -6,7 +6,7 @@ import dev.hellpie.storenite.models.CosmeticsStoreSet
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class FortniteApiResponse<T>(
+internal class FortniteApiResponse<T>(
     val status: Int,
     val error: String? = null,
     val data: T? = null,
