@@ -247,6 +247,7 @@ object Libs {
         const val foundation = "androidx.compose.foundation:foundation:$version"
         const val animation = "androidx.compose.animation:animation:$version"
         const val material2 = "androidx.compose.material:material:$version"
+        const val materialIcons = "androidx.compose.material:material-icons-extended:$version"
         const val material3 = "androidx.compose.material3:material3:1.0.0-alpha09"
         const val preview = "androidx.compose.ui:ui-tooling-preview:$version"
         const val tooling = "androidx.compose.ui:ui-tooling:$version"

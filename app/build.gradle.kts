@@ -123,6 +123,7 @@ dependencies {
     implementation(Libs.Compose.foundation)
     implementation(Libs.Compose.animation)
     implementation(Libs.Compose.material3)
+    implementation(Libs.Compose.materialIcons)
     implementation(Libs.Compose.preview)
     debugImplementation(Libs.Compose.tooling)
 
